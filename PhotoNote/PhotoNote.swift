@@ -65,7 +65,7 @@ class PhotoNote {
     func writeAnnotatedPhotoToFile() {
         var filePathForOriginal, filePathForAnnotated: String
         (filePathForOriginal, filePathForAnnotated) = getImageFilePaths()
-        var imageAnnotatedData: NSData = UIImagePNGRepresentation(self.photoAnnotated)
+        var imageAnnotatedData: NSData = UIImageJPEGRepresentation(self.photoAnnotated, 1.0)
         fileManager.createFileAtPath(filePathForAnnotated, contents: imageAnnotatedData, attributes: nil)
         println("Annotated image saved")
     }

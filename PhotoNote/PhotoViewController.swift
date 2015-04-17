@@ -17,7 +17,6 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     var lastPoint = CGPoint.zeroPoint
     
     let pinchRecognizer = UIPinchGestureRecognizer()
-    var screenSize: CGRect = UIScreen.mainScreen().bounds
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,11 +25,12 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
         let newButton = UIBarButtonItem(title: "Reset", style: UIBarButtonItemStyle.Plain, target: self, action: "resetPhoto:")
         self.navigationItem.rightBarButtonItem = newButton
         
-        //var frame = self.view.frame
-        //self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
-        self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
-        self.imageView.image = self.photonote.photoAnnotated
-        self.imageView.contentMode = UIViewContentMode.ScaleAspectFill
+        self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        self.imageView.image = resizeImageWithAspectFit(self.photonote.photoAnnotated, size: view.frame.size)
+        
+        
+        
+        //self.imageView.contentMode = UIViewContentMode.ScaleAspectFit
         //self.imageView.clipsToBounds = true
         
         //self.imageView.bounds = CGRectMake(0.0, 0.0, self.photonote.photoAnnotated.size.width, self.photonote.photoAnnotated.size.height)
@@ -63,6 +63,8 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
         UIGraphicsBeginImageContext(view.frame.size)
         let context = UIGraphicsGetCurrentContext()
         self.imageView!.image!.drawInRect(CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height))
+        
+        
         
         // 2
         CGContextMoveToPoint(context, fromPoint.x, fromPoint.y)
@@ -120,6 +122,7 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
         if let imageView = self.imageView {
             imageView.image = self.photonote.photoOriginal
             self.photonote.photoAnnotated = self.photonote.photoOriginal
+            self.photonote.writeAnnotatedPhotoToFile()
         }
     }
     
@@ -140,5 +143,36 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     }
     */
 
+    // from https://gist.github.com/jberlana/d6219b92d62c58bed479
+    func resizeImageWithAspectFit(image:UIImage, size:CGSize) -> UIImage {
+        let aspectFitSize = self.getAspectFitRect(origin: image.size, destination: size)
+        let resizedImage = self.resizeImage(image, size: aspectFitSize)
+        return resizedImage
+    }
+    
+    func getAspectFitRect(origin src:CGSize, destination dst:CGSize) -> CGSize {
+        var result = CGSizeZero
+        var scaleRatio = CGPoint()
+        
+        if (dst.width != 0) {scaleRatio.x = src.width / dst.width}
+        if (dst.height != 0) {scaleRatio.y = src.height / dst.height}
+        let scaleFactor = max(scaleRatio.x, scaleRatio.y)
+        
+        result.width  = scaleRatio.x * dst.width / scaleFactor
+        result.height = scaleRatio.y * dst.height / scaleFactor
+        return result
+    }
+    
+    func resizeImage(image:UIImage, size:CGSize) -> UIImage {
+        let scale     = UIScreen.mainScreen().scale
+        let size      = scale > 1 ? CGSizeMake(size.width/scale, size.height/scale) : size
+        let imageRect = CGRectMake(0.0, 0.0, size.width, size.height);
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, scale);
+        image.drawInRect(imageRect)
+        let scaled = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return scaled;
+    }
 
 }
