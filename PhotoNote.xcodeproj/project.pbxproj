@@ -13,6 +13,11 @@
 		C5A18C321AE00DC9006D118D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5A18C311AE00DC9006D118D /* Images.xcassets */; };
 		C5A18C351AE00DC9006D118D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C5A18C331AE00DC9006D118D /* LaunchScreen.xib */; };
 		C5A18C411AE00DC9006D118D /* PhotoNoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A18C401AE00DC9006D118D /* PhotoNoteTests.swift */; };
+		C5A18C4E1AE00E8C006D118D /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A18C4D1AE00E8C006D118D /* ListTableViewController.swift */; };
+		C5A18C501AE00EAC006D118D /* PhotoNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A18C4F1AE00EAC006D118D /* PhotoNote.swift */; };
+		C5A18C531AE054BC006D118D /* PhotoNoteCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A18C521AE054BC006D118D /* PhotoNoteCollection.swift */; };
+		C5A18C551AE05531006D118D /* sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5A18C541AE05531006D118D /* sample.jpg */; };
+		C5A18C571AE05F66006D118D /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A18C561AE05F66006D118D /* PhotoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +41,11 @@
 		C5A18C3A1AE00DC9006D118D /* PhotoNoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoNoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5A18C3F1AE00DC9006D118D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C5A18C401AE00DC9006D118D /* PhotoNoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoNoteTests.swift; sourceTree = "<group>"; };
+		C5A18C4D1AE00E8C006D118D /* ListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		C5A18C4F1AE00EAC006D118D /* PhotoNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoNote.swift; sourceTree = "<group>"; };
+		C5A18C521AE054BC006D118D /* PhotoNoteCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoNoteCollection.swift; sourceTree = "<group>"; };
+		C5A18C541AE05531006D118D /* sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sample.jpg; path = ../../../../Pictures/sample.jpg; sourceTree = "<group>"; };
+		C5A18C561AE05F66006D118D /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,8 +87,12 @@
 		C5A18C271AE00DC9006D118D /* PhotoNote */ = {
 			isa = PBXGroup;
 			children = (
+				C5A18C4C1AE00E69006D118D /* Controllers */,
+				C5A18C4B1AE00E65006D118D /* Views */,
+				C5A18C4A1AE00E5F006D118D /* Models */,
 				C5A18C2A1AE00DC9006D118D /* AppDelegate.swift */,
 				C5A18C2C1AE00DC9006D118D /* ViewController.swift */,
+				C5A18C541AE05531006D118D /* sample.jpg */,
 				C5A18C2E1AE00DC9006D118D /* Main.storyboard */,
 				C5A18C311AE00DC9006D118D /* Images.xcassets */,
 				C5A18C331AE00DC9006D118D /* LaunchScreen.xib */,
@@ -110,6 +124,31 @@
 				C5A18C3F1AE00DC9006D118D /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C5A18C4A1AE00E5F006D118D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C5A18C4F1AE00EAC006D118D /* PhotoNote.swift */,
+				C5A18C521AE054BC006D118D /* PhotoNoteCollection.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		C5A18C4B1AE00E65006D118D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		C5A18C4C1AE00E69006D118D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C5A18C4D1AE00E8C006D118D /* ListTableViewController.swift */,
+				C5A18C561AE05F66006D118D /* PhotoViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +234,7 @@
 				C5A18C301AE00DC9006D118D /* Main.storyboard in Resources */,
 				C5A18C351AE00DC9006D118D /* LaunchScreen.xib in Resources */,
 				C5A18C321AE00DC9006D118D /* Images.xcassets in Resources */,
+				C5A18C551AE05531006D118D /* sample.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,8 +252,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5A18C4E1AE00E8C006D118D /* ListTableViewController.swift in Sources */,
 				C5A18C2D1AE00DC9006D118D /* ViewController.swift in Sources */,
+				C5A18C501AE00EAC006D118D /* PhotoNote.swift in Sources */,
+				C5A18C531AE054BC006D118D /* PhotoNoteCollection.swift in Sources */,
 				C5A18C2B1AE00DC9006D118D /* AppDelegate.swift in Sources */,
+				C5A18C571AE05F66006D118D /* PhotoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PhotoNote/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -353,6 +398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = PhotoNote/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -411,6 +457,7 @@
 				C5A18C461AE00DC9006D118D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C5A18C471AE00DC9006D118D /* Build configuration list for PBXNativeTarget "PhotoNoteTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +466,7 @@
 				C5A18C491AE00DC9006D118D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
