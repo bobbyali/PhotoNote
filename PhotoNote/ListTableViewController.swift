@@ -10,7 +10,7 @@ import UIKit
 
 class ListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    var photonotes = PhotoNoteCollection()
+    var photonotes = PhotoNoteCollection.sharedInstance
     var tableView: UITableView!
     var imagePicker = UIImagePickerController()
     var imageView: UIImageView!
@@ -166,6 +166,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
                     if let newImage = image {
                         var tempPhotoNote = PhotoNote(title: self.newTitleField.text, photo: newImage)
                         self.photonotes.list.append(tempPhotoNote)
+                        self.photonotes.saveCollection()
                         self.tableView.reloadData()
                     }
                 }

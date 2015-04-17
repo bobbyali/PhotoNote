@@ -83,6 +83,8 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
     override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
         // 6
         swiped = true
+        var numTouches = touches.count
+        println("Number of touches is \(numTouches)")
         if let touch = touches.first as? UITouch {
             let currentPoint = touch.locationInView(view)
             drawLineFrom(lastPoint, toPoint: currentPoint)
@@ -108,12 +110,14 @@ class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureReco
         UIGraphicsEndImageContext()
         
         self.photonote.photoAnnotated = self.imageView!.image!
+        self.photonote.writeAnnotatedPhotoToFile()
     }
     
     func resetPhoto(sender:UIButton!) {
         if let imageView = self.imageView {
             imageView.image = self.photonote.photoOriginal
             self.photonote.photoAnnotated = self.photonote.photoOriginal
+            self.photonote.writeAnnotatedPhotoToFile()
         }
     }
     
