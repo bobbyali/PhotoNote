@@ -8,29 +8,33 @@
 
 import UIKit
 
-class PhotoViewController: UIViewController {
+class PhotoViewController: UIViewController, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
-    var imageView: UIImageView?
+    var imageView: UIImageView!
     var photonote: PhotoNote!
     
     var swiped: Bool = false
     var lastPoint = CGPoint.zeroPoint
     
-    let scrollView = UIScrollView(frame: UIScreen.mainScreen().bounds)
+    let pinchRecognizer = UIPinchGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        //self.view = self.scrollView
-        
-        
         let newButton = UIBarButtonItem(title: "Reset", style: UIBarButtonItemStyle.Plain, target: self, action: "resetPhoto:")
         self.navigationItem.rightBarButtonItem = newButton
         
         var frame = self.view.frame
         self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height))
-        self.imageView?.image = self.photonote.photoAnnotated
+        self.imageView.image = self.photonote.photoAnnotated
+        
+        //self.imageView.bounds = CGRectMake(0.0, 0.0, self.photonote.photoAnnotated.size.width, self.photonote.photoAnnotated.size.height)
+        //self.imageView.center = self.view.center
+        self.imageView.userInteractionEnabled = true
+        self.pinchRecognizer.delegate = self
+        self.imageView.addGestureRecognizer(self.pinchRecognizer)
+        
         self.view.addSubview(self.imageView!)
         
         
@@ -112,5 +116,23 @@ class PhotoViewController: UIViewController {
             self.photonote.photoAnnotated = self.photonote.photoOriginal
         }
     }
+    
+    
+    func pinchGestureDetected(sender: UIPinchGestureRecognizer) {
+        let touchPosition = sender.locationInView(self.imageView)
+        println("pinching")
+        if sender.state == UIGestureRecognizerState.Began {
+            var scale: CGFloat = sender.scale
+            let myTransform:CGAffineTransform = CGAffineTransformMakeScale(scale, scale)
+            self.imageView!.transform = myTransform
+        }
+        
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+
 
 }
