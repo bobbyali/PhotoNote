@@ -69,6 +69,7 @@ class ListTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let targetVC = PhotoViewController()
         targetVC.photonote = self.photonotes.list[indexPath.row]
+        self.photonotes.list[indexPath.row].readPhotosFromFile()
         self.navigationController?.pushViewController(targetVC, animated: true)
 
     }

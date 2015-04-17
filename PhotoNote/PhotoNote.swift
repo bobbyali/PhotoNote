@@ -22,16 +22,55 @@ class PhotoNote {
         self.photoAnnotated = photo
         self.photoOriginal = photo
         self.date = NSDate()
+        writePhotosToFile()
     }
     
-    init(title:String, imagePathForOriginalImage:String, imagePathForAnnotatedImage:String) {
+    init(title:String) {
         self.title = title
         self.date = NSDate()
-        readPhotosFromFile(imagePathForOriginalImage, imagePathForAnnotated: imagePathForAnnotatedImage)
+        readPhotosFromFile()
     }
     
-    func writePhotosToFile() -> (String, String) {
+    func writePhotosToFile() {
         
+        var filePathForOriginal, filePathForAnnotated: String
+        (filePathForOriginal, filePathForAnnotated) = getImageFilePaths()
+        
+        var imageOriginalData:  NSData = UIImageJPEGRepresentation(self.photoOriginal, 1.0)
+        var imageAnnotatedData: NSData = UIImageJPEGRepresentation(self.photoAnnotated, 1.0)
+        
+        fileManager.createFileAtPath(filePathForOriginal, contents: imageOriginalData, attributes: nil)
+        fileManager.createFileAtPath(filePathForAnnotated, contents: imageAnnotatedData, attributes: nil)
+        
+        println("Images saved")
+        
+    }
+    
+    func readPhotosFromFile() {
+        
+        var imagePathForOriginal, imagePathForAnnotated: String
+        (imagePathForOriginal, imagePathForAnnotated) = getImageFilePaths()
+        
+        if (fileManager.fileExistsAtPath(imagePathForOriginal)) {
+            println("Files available");
+            self.photoOriginal  = UIImage(contentsOfFile: imagePathForOriginal)!
+            self.photoAnnotated = UIImage(contentsOfFile: imagePathForAnnotated)!
+        }
+        else {
+            println("Files not available");
+        }
+    }
+    
+    
+    func writeAnnotatedPhotoToFile() {
+        var filePathForOriginal, filePathForAnnotated: String
+        (filePathForOriginal, filePathForAnnotated) = getImageFilePaths()
+        var imageAnnotatedData: NSData = UIImagePNGRepresentation(self.photoAnnotated)
+        fileManager.createFileAtPath(filePathForAnnotated, contents: imageAnnotatedData, attributes: nil)
+        println("Annotated image saved")
+    }
+    
+    func getImageFilePaths() -> (imagePathForOriginal:String, imagePathForAnnotated:String) {
         var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
         
         var titleOriginal = self.title.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -40,44 +79,7 @@ class PhotoNote {
         var filePathForOriginal  = "\(paths)/\(titleOriginal).png"
         var filePathForAnnotated = "\(paths)/\(titleAnnotated).png"
         
-        var imageOriginalData:  NSData = UIImagePNGRepresentation(self.photoOriginal)
-        var imageAnnotatedData: NSData = UIImagePNGRepresentation(self.photoAnnotated)
-        
-        fileManager.createFileAtPath(filePathForOriginal, contents: imageOriginalData, attributes: nil)
-        fileManager.createFileAtPath(filePathForAnnotated, contents: imageAnnotatedData, attributes: nil)
-        
-        println("Images saved")
-        
         return (filePathForOriginal, filePathForAnnotated)
-        
-    }
-    
-    func readPhotosFromFile(imagePathForOriginal: String, imagePathForAnnotated: String) {
-        
-        if (fileManager.fileExistsAtPath(imagePathForOriginal))
-        {
-            println("Files available");
-            self.photoOriginal  = UIImage(contentsOfFile: imagePathForOriginal)!
-            self.photoAnnotated = UIImage(contentsOfFile: imagePathForAnnotated)!
-            //let data: NSData = UIImagePNGRepresentation(imageis)
-        }
-        else
-        {
-            println("Files not available");
-        }
-        
-    }
-    
-    
-    func writeAnnotatedPhotoToFile() {
-        
-        var paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-        var titleAnnotated = self.title.stringByReplacingOccurrencesOfString(" ", withString: "_", options: NSStringCompareOptions.LiteralSearch, range: nil) + "_annotated"
-        var filePathForAnnotated = "\(paths)/\(titleAnnotated).png"
-        var imageAnnotatedData: NSData = UIImagePNGRepresentation(self.photoAnnotated)
-        fileManager.createFileAtPath(filePathForAnnotated, contents: imageAnnotatedData, attributes: nil)
-        println("Annotated image saved")
-        
     }
     
 }
